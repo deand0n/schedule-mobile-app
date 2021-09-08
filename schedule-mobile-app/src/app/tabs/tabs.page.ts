@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
+  b = [1,2,3]
   constructor() {}
 
 }
