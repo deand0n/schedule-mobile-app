@@ -25,5 +25,11 @@
 </ion-menu>
 
 <ion-content id="main">
-  <div>hello world</div>
+  <ion-refresher slot="fixed">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <schedule-day></schedule-day>
+  </ion-list>
 </ion-content>
