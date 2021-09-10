@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -13,6 +13,7 @@
       <ion-title>Start Menu</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-content>
     <ion-list>
       <ion-item>Menu Item</ion-item>
@@ -30,6 +31,8 @@
   </ion-refresher>
 
   <ion-list>
-    <schedule-day></schedule-day>
+    <ng-container *ngFor="let day of days">
+      <schedule-day [day]="day"></schedule-day>
+    </ng-container>
   </ion-list>
 </ion-content>

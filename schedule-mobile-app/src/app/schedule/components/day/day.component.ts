@@ -4,10 +4,10 @@ import {Day} from '../../models/day.model';
 @Component({
   selector: 'schedule-day',
   templateUrl: './day.component.html',
-  styleUrls: ['./day.component.css']
+  styleUrls: ['./day.component.scss']
 })
 export class DayComponent implements OnInit {
-  // @Input() day!: Day;
+  @Input() day!: Day;
 
   constructor() { }
 
