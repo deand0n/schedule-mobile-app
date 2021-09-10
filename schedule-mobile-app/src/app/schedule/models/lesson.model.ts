@@ -3,5 +3,5 @@ export interface Lesson {
   time: string;
   type: string;
   name: string;
-  groups?: string;
+  groups: string;
 }
