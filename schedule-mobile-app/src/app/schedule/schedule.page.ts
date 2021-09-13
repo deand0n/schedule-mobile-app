@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Day} from './models/day.model';
+import {ModalController} from '@ionic/angular';
+import {EditSearchParamsModalComponent} from '../shared/modals/edit-search-params-modal/edit-search-params-modal.component';
 
 @Component({
   selector: 'app-schedule',
@@ -79,10 +81,18 @@ export class SchedulePage implements OnInit {
   ]
 
 
-  constructor() {
+  constructor(private modalController: ModalController) {
   }
 
   ngOnInit() {
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: EditSearchParamsModalComponent,
+      swipeToClose: true
+    });
+    return await modal.present();
   }
 
 }

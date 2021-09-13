@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit search params</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <ion-item tappable="true" detail="true" (click)="test()" color="primary">
+      <ion-label>primary</ion-label>
+      <ion-text>
+        aaaaaaaaaaaaaa
+      </ion-text>
+    </ion-item>
+
+    <ion-item detail="true" detail-icon="chevron-down" color="secondary">
+      <ion-label>secondary</ion-label>
+    </ion-item>
+
+    <ion-item detail="true" detail-icon="chevron-down" color="tertiary">
+      <ion-label>tertiary</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
