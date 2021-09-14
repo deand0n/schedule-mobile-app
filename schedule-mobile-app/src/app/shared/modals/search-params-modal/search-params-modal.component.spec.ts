@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EditSearchParamsModalComponent } from './edit-search-params-modal.component';
+import {SearchParamsModalComponent} from './search-params-modal.component';
 
 describe('EditSearchParamsModalComponent', () => {
-  let component: EditSearchParamsModalComponent;
-  let fixture: ComponentFixture<EditSearchParamsModalComponent>;
+  let component: SearchParamsModalComponent;
+  let fixture: ComponentFixture<SearchParamsModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditSearchParamsModalComponent ]
+      declarations: [ SearchParamsModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditSearchParamsModalComponent);
+    fixture = TestBed.createComponent(SearchParamsModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
