@@ -10,6 +10,6 @@
 
 <ion-content>
   <ion-list lines="full">
-    <edit-search-params></edit-search-params>
+    <edit-search-params *ngFor="let params of tabSettings.searchParams"></edit-search-params>
   </ion-list>
 </ion-content>

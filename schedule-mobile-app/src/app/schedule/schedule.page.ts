@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Day} from './models/day.model';
 import {ModalController} from '@ionic/angular';
 import {SearchParamsModalComponent} from '../shared/modals/search-params-modal/search-params-modal.component';
+import {TabSettings} from '../shared/models/tab-settings';
+import {ActivatedRoute} from '@angular/router';
+import {SettingsService} from '../core/services/settings.service';
 
 @Component({
   selector: 'app-schedule',
@@ -81,7 +84,8 @@ export class SchedulePage implements OnInit {
   ]
 
 
-  constructor(private modalController: ModalController) {
+  constructor(private modalController: ModalController,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -90,7 +94,11 @@ export class SchedulePage implements OnInit {
   async presentModal() {
     const modal = await this.modalController.create({
       component: SearchParamsModalComponent,
-      swipeToClose: true
+      swipeToClose: true,
+      componentProps: {
+        tabId: this.route.snapshot.paramMap.get('id')
+      }
+
     });
     return await modal.present();
   }
