@@ -1,20 +1,10 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="schedule/1">
-      <ion-icon name="square"></ion-icon>
-      <ion-label></ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="schedule/2">
-      <ion-icon name="triangle"></ion-icon>
-      <ion-label></ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="schedule/3">
-      <ion-icon name="square"></ion-icon>
-      <ion-label></ion-label>
-    </ion-tab-button>
+      <ion-tab-button *ngFor="let tab of settings.tabSettings" tab="schedule/{{tab.id}}">
+        <ion-icon name="{{tab.icon}}"></ion-icon>
+        <ion-label>{{tab.name}}</ion-label>
+      </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>

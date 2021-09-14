@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Storage} from '@ionic/storage';
+import {Storage} from '@ionic/storage-angular';
 import {Settings} from '../../shared/models/settings.model';
 import {defaultSettings} from '../../shared/models/default-settings';
 import {LogService} from './log.service';
@@ -7,7 +7,7 @@ import {LogService} from './log.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService implements OnInit {
+export class SettingsService {
 
   private _settings: Settings;
 
@@ -16,7 +16,9 @@ export class SettingsService implements OnInit {
               private logService: LogService) {
   }
 
-  ngOnInit(): void {
+  async init(): Promise<void> {
+    await this.storage.create();
+
     this.storage.get('settings').then((settings) => {
       this._settings = settings;
 

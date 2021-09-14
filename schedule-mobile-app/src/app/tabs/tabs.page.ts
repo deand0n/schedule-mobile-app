@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SettingsService} from '../core/services/settings.service';
+import {Settings} from '../shared/models/settings.model';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {
+export class TabsPage implements OnInit{
 
-  b = [1,2,3]
-  constructor() {}
+  settings: Settings;
 
+  constructor(private settingsService: SettingsService) {}
+
+  ngOnInit() {
+    this.settings = this.settingsService.getSettings();
+  }
 }

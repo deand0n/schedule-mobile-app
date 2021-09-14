@@ -1,4 +1,5 @@
+import {TabSettings} from './tab-settings';
+
 export interface Settings {
-  tabAmount: number;
-  language: 'en' | 'ru' | 'ua';
+  tabSettings: TabSettings[]
 }
