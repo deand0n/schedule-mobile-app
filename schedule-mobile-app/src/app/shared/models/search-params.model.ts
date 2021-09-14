@@ -1,4 +1,4 @@
-export interface SearchParams {
+export class SearchParams {
   group?: string;
   teacher?: string;
   from?: Date;

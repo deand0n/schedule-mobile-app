@@ -4,9 +4,10 @@ import {SettingsService} from '../../../core/services/settings.service';
 import {Settings} from '../../models/settings.model';
 import {TabSettings} from '../../models/tab-settings';
 import {ActivatedRoute} from '@angular/router';
+import {SearchParams} from '../../models/search-params.model';
 
 @Component({
-  selector: 'edit-search-params-modal',
+  selector: 'search-params-modal',
   templateUrl: './search-params-modal.component.html',
   styleUrls: ['./search-params-modal.component.scss']
 })
@@ -25,7 +26,11 @@ export class SearchParamsModalComponent implements OnInit {
     console.log(this.tabSettings)
   }
 
-  async closeModal() {
+  async closeModal(): Promise<void> {
     await this.modalController.dismiss();
+  }
+
+  addSearchParams(): void {
+    this.tabSettings.searchParams.push(new SearchParams());
   }
 }
