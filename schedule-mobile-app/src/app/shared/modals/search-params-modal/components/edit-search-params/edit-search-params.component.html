@@ -34,7 +34,9 @@
 
       <ion-item>
         <ion-label>Автоматичний пошук на місяць</ion-label>
-        <ion-toggle formControlName="isForMonth"></ion-toggle>
+        <ion-toggle formControlName="isForMonth"
+                    (click)="toggleDateFields(!searchParamsForm.get('isForMonth').value)">
+        </ion-toggle>
       </ion-item>
 
       <ion-button expand="full" style="margin-top: 10px" (click)="saveSearchParams()">
