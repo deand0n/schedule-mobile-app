@@ -42,7 +42,7 @@ export class EditSearchParamsComponent implements OnInit {
   saveSearchParams(): void {
     if (this.searchParamsForm.invalid) {
       this.searchParamsForm.markAllAsTouched();
-      this.presentToast();
+      this.presentToast('Введіть корректні дані');
       return;
     }
 
@@ -55,15 +55,6 @@ export class EditSearchParamsComponent implements OnInit {
     this.onRemove.emit(this.searchParams);
   }
 
-  async presentToast(): Promise<void> {
-    let toast = await this.toastController.create({
-      message: 'Введіть корректні дані',
-      duration: 5000
-    })
-
-    await toast.present();
-  }
-
   toggleDateFields(isEnabled: boolean): void {
     if (isEnabled) {
       this.searchParamsForm.get('from').disable();
@@ -72,5 +63,15 @@ export class EditSearchParamsComponent implements OnInit {
       this.searchParamsForm.get('from').enable();
       this.searchParamsForm.get('to').enable();
     }
+  }
+
+  async presentToast(message: string): Promise<void> {
+    let toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      color: 'danger'
+    })
+
+    await toast.present();
   }
 }
