@@ -1,38 +1,43 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title>
-      <ion-text>Параметр пошуку №1</ion-text>
+      <ion-text>Параметр пошуку №{{searchParams.id}}</ion-text>
+
+      <ion-button class="ion-float-right" size="small" shape="round" color="danger"
+                  (click)="removeSearchParams()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    <form>
+    <form [formGroup]="searchParamsForm">
       <ion-item>
         <ion-label position="stacked">Введіть назву групи:</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" formControlName="group"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Введіть прізвище викладача:</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input type="text" formControlName="teacher"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">З цієї дати:</ion-label>
-        <ion-input type="date"></ion-input>
+        <ion-input type="date" formControlName="from"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">По цю дату:</ion-label>
-        <ion-input type="date"></ion-input>
+        <ion-input type="date" formControlName="to"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Автоматичний пошук на місяць</ion-label>
-        <ion-toggle></ion-toggle>
+        <ion-toggle formControlName="isForMonth"></ion-toggle>
       </ion-item>
 
-      <ion-button expand="full" style="margin-top: 10px">
+      <ion-button expand="full" style="margin-top: 10px" (click)="saveSearchParams()">
         Зберегти
       </ion-button>
     </form>

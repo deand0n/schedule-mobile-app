@@ -16,6 +16,10 @@
   </ion-fab>
 
   <ion-list lines="full">
-    <edit-search-params *ngFor="let params of tabSettings.searchParams"></edit-search-params>
+    <edit-search-params *ngFor="let params of tabSettings.searchParams"
+                        [searchParams]="params"
+                        (onSave)="saveSearchParams($event)"
+                        (onRemove)="removeSearchParams($event)">
+    </edit-search-params>
   </ion-list>
 </ion-content>

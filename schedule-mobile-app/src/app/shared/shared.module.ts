@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import { EditSearchParamsComponent } from './modals/search-params-modal/components/edit-search-params/edit-search-params.component';
 import {SearchParamsModalComponent} from './modals/search-params-modal/search-params-modal.component';
@@ -17,7 +17,9 @@ import {SearchParamsModalComponent} from './modals/search-params-modal/search-pa
   exports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class SharedModule {

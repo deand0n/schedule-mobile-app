@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {SettingsService} from '../../../core/services/settings.service';
-import {Settings} from '../../models/settings.model';
 import {TabSettings} from '../../models/tab-settings';
-import {ActivatedRoute} from '@angular/router';
 import {SearchParams} from '../../models/search-params.model';
 
 @Component({
@@ -21,9 +19,7 @@ export class SearchParamsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.tabId)
-    this.tabSettings = this.settingsService.getSettings().tabSettings[this.tabId];
-    console.log(this.tabSettings)
+    this.tabSettings = this.settingsService.getTabSettings(this.tabId);
   }
 
   async closeModal(): Promise<void> {
@@ -31,6 +27,21 @@ export class SearchParamsModalComponent implements OnInit {
   }
 
   addSearchParams(): void {
-    this.tabSettings.searchParams.push(new SearchParams());
+    const lastElementId = this.tabSettings.searchParams[this.tabSettings.searchParams.length - 1]?.id || 0;
+    this.tabSettings.searchParams.push(new SearchParams(lastElementId + 1));
+  }
+
+  saveSearchParams(searchParams: SearchParams): void {
+    const params = this.tabSettings.searchParams.find((params) => params.id === searchParams.id)
+    Object.assign(params, searchParams);
+
+    this.settingsService.setTabSettings(this.tabId, this.tabSettings);
+  }
+
+  removeSearchParams(searchParams: SearchParams): void {
+    const params = this.tabSettings.searchParams.find((params) =>  params.id === searchParams.id)
+    this.tabSettings.searchParams.splice(this.tabSettings.searchParams.indexOf(params), 1);
+
+    this.settingsService.setTabSettings(this.tabId, this.tabSettings);
   }
 }
