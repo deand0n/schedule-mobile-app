@@ -3,7 +3,10 @@
     <ion-card-title>
       <ion-text>Параметр пошуку №{{searchParams.id}}</ion-text>
 
-      <ion-button class="ion-float-right" size="small" shape="round" color="danger"
+      <ion-button class="ion-float-right"
+                  size="small"
+                  shape="round"
+                  color="danger"
                   (click)="removeSearchParams()">
         <ion-icon name="close"></ion-icon>
       </ion-button>
@@ -12,23 +15,41 @@
 
   <ion-card-content>
     <form [formGroup]="searchParamsForm">
-      <ion-item>
-        <ion-label position="stacked">Введіть назву групи:</ion-label>
-        <ion-input type="text" formControlName="group"></ion-input>
-      </ion-item>
+      <div class="ng-autocomplete">
+        <ng-autocomplete formControlName="group"
+                         [data]="countries"
+                         [searchKeyword]="keyword"
+                         placeholder="Введіть назву групи"
+                         historyIdentifier="countries"
+                         [itemTemplate]="itemTemplate">
+        </ng-autocomplete>
+
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name"></a>
+        </ng-template>
+      </div>
+
+      <div class="ng-autocomplete">
+        <ng-autocomplete formControlName="teacher"
+                         [data]="countries"
+                         [searchKeyword]="keyword"
+                         placeholder="Введіть прізвище викладача"
+                         historyIdentifier="countries"
+                         [itemTemplate]="itemTemplate">
+        </ng-autocomplete>
+
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name"></a>
+        </ng-template>
+      </div>
 
       <ion-item>
-        <ion-label position="stacked">Введіть прізвище викладача:</ion-label>
-        <ion-input type="text" formControlName="teacher"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">З цієї дати:</ion-label>
+        <ion-label position="stacked">З дати:</ion-label>
         <ion-input type="date" formControlName="from"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">По цю дату:</ion-label>
+        <ion-label position="stacked">По дату:</ion-label>
         <ion-input type="date" formControlName="to"></ion-input>
       </ion-item>
 

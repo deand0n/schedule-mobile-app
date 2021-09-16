@@ -19,8 +19,8 @@ export class EditSearchParamsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private toastController: ToastController) {
     this.searchParamsForm = this.formBuilder.group({
-      group: ['', [Validators.required]],
-      teacher: ['', [Validators.required]],
+      group: ['', []],
+      teacher: ['', []],
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
       isForMonth: ['', [Validators.required]]
@@ -42,7 +42,12 @@ export class EditSearchParamsComponent implements OnInit {
   saveSearchParams(): void {
     if (this.searchParamsForm.invalid) {
       this.searchParamsForm.markAllAsTouched();
-      this.presentToast('Введіть корректні дані');
+      this.presentToastError('Введіть корректні дані');
+      return;
+    }
+
+    if (!this.searchParamsForm.get('group').value && !this.searchParamsForm.get('teacher').value) {
+      this.presentToastError('Введіть назву групи або прізвище викладача')
       return;
     }
 
@@ -65,13 +70,71 @@ export class EditSearchParamsComponent implements OnInit {
     }
   }
 
-  async presentToast(message: string): Promise<void> {
+  async presentToastError(message: string): Promise<void> {
     let toast = await this.toastController.create({
       message: message,
       duration: 3000,
-      color: 'danger'
+      color: 'danger',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+        }
+      ]
     })
 
     await toast.present();
   }
+
+  keyword = 'name';
+  public countries = [
+    {
+      id: 1,
+      name: 'Albania',
+    },
+    {
+      id: 2,
+      name: 'Belgium',
+    },
+    {
+      id: 3,
+      name: 'Denmark',
+    },
+    {
+      id: 4,
+      name: 'Montenegro',
+    },
+    {
+      id: 5,
+      name: 'Turkey',
+    },
+    {
+      id: 6,
+      name: 'Ukraine',
+    },
+    {
+      id: 7,
+      name: 'Macedonia',
+    },
+    {
+      id: 8,
+      name: 'Slovenia',
+    },
+    {
+      id: 9,
+      name: 'Georgia',
+    },
+    {
+      id: 10,
+      name: 'India',
+    },
+    {
+      id: 11,
+      name: 'Russia',
+    },
+    {
+      id: 12,
+      name: 'Switzerland',
+    }
+  ];
 }

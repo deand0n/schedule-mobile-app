@@ -32,6 +32,7 @@
     "@ionic/storage-angular": "^3.0.6",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "angular-ng-autocomplete": "^2.0.5",
     "cordova-sqlite-storage": "^6.0.0",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
