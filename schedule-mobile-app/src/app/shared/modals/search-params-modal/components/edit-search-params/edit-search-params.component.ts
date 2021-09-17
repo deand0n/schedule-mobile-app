@@ -31,8 +31,8 @@ export class EditSearchParamsComponent implements OnInit {
     this.searchParamsForm.patchValue({
       group: this.searchParams?.group,
       teacher: this.searchParams?.teacher,
-      from: this.searchParams?.from,
-      to: this.searchParams?.to,
+      from: this.searchParams?.startDate,
+      to: this.searchParams?.endDate,
       isForMonth: this.searchParams?.isForMonth
     })
 
