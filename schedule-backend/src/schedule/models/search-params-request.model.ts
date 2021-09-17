@@ -1,1 +1,0 @@
-import { SearchParams } from './search-params.model';export class SearchParamsRequest extends SearchParams {  id: number;  isForMonth: boolean;}
