@@ -13,17 +13,18 @@ export class ScheduleController {
 
   @Get()
   async getSchedule() {
-    const a = {
-      id: 0,
-      faculty: 1004,
-      group: '%CF%C7-1904%2B%F1%EA',
-      teacher: '',
-      startDate: '17.09.2021',
-      endDate: '30.09.2021',
-      isForMonth: false,
-    };
+    const a = [
+      {
+        id: 0,
+        faculty: 1004,
+        group: '%CF%C7-1904%2B%F1%EA',
+        teacher: '',
+        startDate: '17.09.2021',
+        endDate: '30.09.2021',
+        isForMonth: false,
+      }];
 
-    return this.scheduleService.getScheduleDays(a);
+    return this.scheduleService.getSchedule(a);
   }
 
   // @Post()
