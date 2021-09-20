@@ -1,12 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-} from '@nestjs/common';
-import { ScheduleService } from './schedule.service';
+import { Controller, Get, Post, Body } from "@nestjs/common";
+import { ScheduleService } from "./schedule.service";
 
-@Controller('api/schedule')
+@Controller("api/schedule")
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {
   }
@@ -17,10 +12,10 @@ export class ScheduleController {
       {
         id: 0,
         faculty: 1004,
-        group: '%CF%C7-1904%2B%F1%EA',
-        teacher: '',
-        startDate: '17.09.2021',
-        endDate: '30.09.2021',
+        group: "%CF%C7-1904%2B%F1%EA",
+        teacher: "",
+        startDate: "17.09.2021",
+        endDate: "30.09.2021",
         isForMonth: false,
       }];
 
