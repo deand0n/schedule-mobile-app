@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Day } from './models/day.model';
-import { lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { SearchParams } from './models/search-params.model';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const encoding = require('encoding');
 
 @Injectable()
 export class ScheduleService {
@@ -14,18 +17,18 @@ export class ScheduleService {
     let parsedDays: Day[] = [];
 
     for (const params of searchParams) {
-      let res = await this.getResponseHTML(params);
-      console.log(res.data)
-      parsedDays = parsedDays.concat(this.parseDaysFromHTML(res.data));
+      const response = await this.getResponseHTML(params);
+
+      const convertedByteArray = encoding.convert(response.data, 'UTF-8', 'windows-1251');
+
+      parsedDays = parsedDays.concat(this.parseDaysFromHTML(convertedByteArray.toString()));
     }
 
 
-    console.log(parsedDays);
-
     return parsedDays;
   }
-
-  private getResponseHTML(searchParams: SearchParams): Promise<AxiosResponse<string>> {
+  
+  private getResponseHTML(searchParams: SearchParams): Promise<AxiosResponse> {
     const rawSearchParams =
       // `faculty=${searchParams.faculty}&` +
       `group=${this.groupNameToHex(searchParams.group)}&` +
@@ -35,7 +38,9 @@ export class ScheduleService {
 
     return lastValueFrom(this.http.post(
       'http://195.95.232.162:8082/cgi-bin/timetable.cgi?n=700',
-      rawSearchParams,
+      rawSearchParams, {
+        responseType: 'arraybuffer',
+      },
     ));
   }
 
