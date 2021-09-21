@@ -12,6 +12,7 @@ export class ScheduleController {
       {
         id: 0,
         faculty: 1004,
+        // group: "%CF%C7-2004",
         group: "%CF%C7-1904%2B%F1%EA",
         teacher: "",
         startDate: "17.09.2021",

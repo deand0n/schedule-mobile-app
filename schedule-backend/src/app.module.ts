@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ScheduleModule } from './schedule/schedule.module';
+import { Module } from "@nestjs/common";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { ScheduleModule } from "./schedule/schedule.module";
 
 
 @Module({
@@ -9,4 +9,5 @@ import { ScheduleModule } from './schedule/schedule.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}

@@ -1,7 +1,7 @@
-import { Lesson } from './lesson.model';
+import { Lesson } from "./lesson.model";
 
 export class Day {
   name: string;
-  date: Date;
+  date: string;
   lessons: Lesson[];
 }
