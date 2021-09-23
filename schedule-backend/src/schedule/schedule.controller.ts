@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body } from "@nestjs/common";
 import { ScheduleService } from "./schedule.service";
+import { SearchParams } from "./models/search-params.model";
 
 @Controller("api/schedule")
 export class ScheduleController {
@@ -7,34 +8,40 @@ export class ScheduleController {
   }
 
   @Get()
-  async getSchedule() {
+  async getScheduleTest() {
     const a = [
       {
         id: 0,
         faculty: 1004,
+        group: "ПЗ-1904+ск",
+        // group: "%CF%C7-2104",
         // group: "%CF%C7-2004",
-        group: "%CF%C7-1904%2B%F1%EA",
+        // group: "%CF%C7-1904%2B%F1%EA",
         teacher: "",
         startDate: "17.09.2021",
         endDate: "30.09.2021",
         isForMonth: false,
-      }];
+      },
+      {
+        id: 0,
+        faculty: 1004,
+        group: "Б-3к-121",
+        // group: "%CF%C7-2104",
+        // group: "%CF%C7-2004",
+        // group: "%CF%C7-1904%2B%F1%EA",
+        teacher: "",
+        startDate: "17.09.2021",
+        endDate: "30.09.2021",
+        isForMonth: false,
+      },
+    ];
 
     return this.scheduleService.getSchedule(a);
   }
 
-  // @Post()
-  // async getSchedule(@Body searchParams: SearchParams) {
-  //   const a = {
-  //     id: 0,
-  //     faculty: 1004,
-  //     group: '%CF%C7-1904%2B%F1%EA',
-  //     teacher: '',
-  //     startDate: '17.09.2021',
-  //     endDate: '30.09.2021',
-  //     isForMonth: false,
-  //   };
-  //
-  //   return this.scheduleService.getScheduleDays(a);
-  // }
+  @Post()
+  async getSchedule(@Body() searchParams: SearchParams[]) {
+
+    return this.scheduleService.getSchedule(searchParams);
+  }
 }
