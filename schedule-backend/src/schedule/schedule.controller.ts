@@ -51,6 +51,7 @@ export class ScheduleController {
 
   @Get("/autocomplete/groups")
   async getGroupAutocomplete(@Query("query") query: string) {
+    console.log("asdf");
     return await this.scheduleService.getGroupAutocomplete(query);
   }
 }
