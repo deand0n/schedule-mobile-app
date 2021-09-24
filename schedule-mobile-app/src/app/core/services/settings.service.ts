@@ -10,7 +10,7 @@ import {TabSettings} from '../../shared/models/tab-settings';
 })
 export class SettingsService {
 
-  private _settings: Settings;
+  private settings: Settings;
 
 
   constructor(private storage: Storage,
@@ -21,38 +21,39 @@ export class SettingsService {
     await this.storage.create();
 
     this.storage.get('settings').then((settings) => {
-      this._settings = {...settings};
+      this.settings = {...settings};
 
-      if (!settings)
+      if (!settings) {
         this.resetToDefault();
+      }
     }).catch((error) => {
-      this.logService.error(`Error while reading settings from file system, error: ${error}`)
-    })
+      this.logService.error(`Error while reading settings from file system, error: ${error}`);
+    });
   }
 
   getSettings(): Settings {
-    return this._settings;
+    return this.settings;
   }
 
   setSettings(settings: Settings): void {
     this.storage.set('settings', settings).then((settings) => {
-      this._settings = settings;
+      this.settings = settings;
     }).catch((error) => {
       this.logService.error(`Error while saving settings, error: ${error}`);
     });
   }
 
   getTabSettings(tabId: number): TabSettings {
-    return this._settings.tabSettings[tabId];
+    return this.settings.tabSettings[tabId];
   }
 
   setTabSettings(tabId: number, tabSettings: TabSettings): void {
-    this._settings.tabSettings[tabId] = tabSettings;
+    this.settings.tabSettings[tabId] = tabSettings;
 
-    this.setSettings(this._settings)
+    this.setSettings(this.settings);
   }
 
   resetToDefault(): void {
-    this._settings = {...defaultSettings};
+    this.settings = {...defaultSettings};
   }
 }

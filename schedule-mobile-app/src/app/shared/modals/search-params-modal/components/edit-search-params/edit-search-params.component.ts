@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SearchParams} from '../../../../models/search-params.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastController} from '@ionic/angular';
+import {debounceTime} from 'rxjs/operators';
+import {ScheduleService} from '../../../../../core/services/schedule.service';
 
 @Component({
   selector: 'edit-search-params',
@@ -15,9 +17,12 @@ export class EditSearchParamsComponent implements OnInit {
   @Output() onRemove = new EventEmitter<SearchParams>();
 
   searchParamsForm: FormGroup;
+  groupsAutocomplete: string[] = [];
+  teachersAutocomplete: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private toastController: ToastController) {
+              private toastController: ToastController,
+              private scheduleService: ScheduleService) {
     this.searchParamsForm = this.formBuilder.group({
       group: ['', []],
       teacher: ['', []],
@@ -34,7 +39,15 @@ export class EditSearchParamsComponent implements OnInit {
       from: this.searchParams?.startDate,
       to: this.searchParams?.endDate,
       isForMonth: this.searchParams?.isForMonth
-    })
+    });
+
+    this.scheduleService.getGroupAutocomplete('').subscribe((groups) => {
+      this.groupsAutocomplete = groups;
+    });
+
+    this.scheduleService.getTeacherAutocomplete('').subscribe((teachers) => {
+      this.teachersAutocomplete = teachers;
+    });
 
     this.toggleDateFields(this.searchParams.isForMonth);
   }
@@ -71,7 +84,7 @@ export class EditSearchParamsComponent implements OnInit {
   }
 
   async presentToastError(message: string): Promise<void> {
-    let toast = await this.toastController.create({
+    const toast = await this.toastController.create({
       message: message,
       duration: 3000,
       color: 'danger',
@@ -81,7 +94,7 @@ export class EditSearchParamsComponent implements OnInit {
           role: 'cancel',
         }
       ]
-    })
+    });
 
     await toast.present();
   }

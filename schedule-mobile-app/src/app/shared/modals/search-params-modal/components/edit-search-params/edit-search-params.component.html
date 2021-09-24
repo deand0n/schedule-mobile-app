@@ -17,29 +17,25 @@
     <form [formGroup]="searchParamsForm">
       <div class="ng-autocomplete">
         <ng-autocomplete formControlName="group"
-                         [data]="countries"
-                         [searchKeyword]="keyword"
+                         [data]="groupsAutocomplete"
                          placeholder="Введіть назву групи"
-                         historyIdentifier="countries"
                          [itemTemplate]="itemTemplate">
         </ng-autocomplete>
 
         <ng-template #itemTemplate let-item>
-          <a [innerHTML]="item.name"></a>
+          <a [innerHTML]="item"></a>
         </ng-template>
       </div>
 
       <div class="ng-autocomplete">
         <ng-autocomplete formControlName="teacher"
-                         [data]="countries"
-                         [searchKeyword]="keyword"
+                         [data]="teachersAutocomplete"
                          placeholder="Введіть прізвище викладача"
-                         historyIdentifier="countries"
                          [itemTemplate]="itemTemplate">
         </ng-autocomplete>
 
         <ng-template #itemTemplate let-item>
-          <a [innerHTML]="item.name"></a>
+          <a [innerHTML]="item"></a>
         </ng-template>
       </div>
 

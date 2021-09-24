@@ -23,7 +23,9 @@ export class SearchParamsModalComponent implements OnInit {
   }
 
   async closeModal(): Promise<void> {
-    await this.modalController.dismiss();
+    await this.modalController.dismiss({
+      dismissed: true,
+    });
   }
 
   addSearchParams(): void {
@@ -39,7 +41,7 @@ export class SearchParamsModalComponent implements OnInit {
   }
 
   removeSearchParams(searchParams: SearchParams): void {
-    const params = this.tabSettings.searchParams.find((params) =>  params.id === searchParams.id)
+    const params = this.tabSettings.searchParams.find((params) => params.id === searchParams.id)
     this.tabSettings.searchParams.splice(this.tabSettings.searchParams.indexOf(params), 1);
 
     this.settingsService.setTabSettings(this.tabId, this.tabSettings);

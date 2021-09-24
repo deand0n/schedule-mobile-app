@@ -1,7 +1,7 @@
 <ion-card>
   <ion-card-header color="secondary">
     <ion-card-title>
-      {{day.name}}, {{day.date.toLocaleDateString()}}
+      {{day.name}}, {{day.date}}
     </ion-card-title>
   </ion-card-header>
 
@@ -10,7 +10,7 @@
       <ion-item *ngFor="let lesson of day.lessons" class="card__item">
         <ion-text>
           <h2>Пара №{{lesson.order}}: <strong>({{lesson.time}})</strong></h2>
-          <p>{{lesson.type}}</p>
+          <p>({{lesson.type}})</p>
           <p>{{lesson.name}}</p>
           <p>{{lesson.groups}}</p>
         </ion-text>
