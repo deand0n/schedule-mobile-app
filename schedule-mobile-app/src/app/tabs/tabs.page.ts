@@ -7,11 +7,12 @@ import {Settings} from '../shared/models/settings.model';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements OnInit{
+export class TabsPage implements OnInit {
 
   settings: Settings;
 
-  constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService) {
+  }
 
   ngOnInit() {
     this.settings = this.settingsService.getSettings();

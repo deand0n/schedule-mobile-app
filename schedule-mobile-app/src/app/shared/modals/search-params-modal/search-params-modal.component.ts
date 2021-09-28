@@ -24,7 +24,7 @@ export class SearchParamsModalComponent implements OnInit {
 
   async closeModal(): Promise<void> {
     await this.modalController.dismiss({
-      dismissed: true,
+      tabSettings: this.tabSettings,
     });
   }
 

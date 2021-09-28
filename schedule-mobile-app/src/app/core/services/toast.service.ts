@@ -12,7 +12,7 @@ export class ToastService {
   async presentError(message: string): Promise<void> {
     const toast = await this.toastController.create({
       message: message,
-      // duration: 3000,
+      duration: 3000,
       color: 'danger',
       buttons: [
         {

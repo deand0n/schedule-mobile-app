@@ -14,7 +14,7 @@ async function bootstrap() {
       "capacitor://localhost",
       "http://localhost",
       "http://192.168.11.234:8100",
-      "http://192.168.11.234:8101",
+      "http://192.168.11.234:8101"
     ],
     methods: [
       "GET",
@@ -25,11 +25,11 @@ async function bootstrap() {
       "OPTIONS",
       "HEAD",
       "CONNECT",
-      "TRACE",
-    ],
+      "TRACE"
+    ]
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 
   if (module.hot) {
     module.hot.accept();

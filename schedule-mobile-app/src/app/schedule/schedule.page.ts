@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import {SettingsService} from '../core/services/settings.service';
 import {ScheduleService} from '../core/services/schedule.service';
 import {ToastService} from '../core/services/toast.service';
+import {OverlayEventDetail} from '@ionic/core';
 
 @Component({
   selector: 'app-schedule',
@@ -15,75 +16,6 @@ import {ToastService} from '../core/services/toast.service';
 })
 export class SchedulePage implements OnInit {
 
-  // days: Day[] = [
-  //   {
-  //     name: 'Monday',
-  //     date: new Date(),
-  //     lessons: [
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(L)',
-  //         name: 'English',
-  //         groups: 'PZ'
-  //       },
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(Lab)',
-  //         name: 'Biology',
-  //         groups: 'BK'
-  //       },
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(L)',
-  //         name: 'Math',
-  //         groups: 'KN'
-  //       },
-  //       {
-  //         order: 3,
-  //         time: '11:50-13:10',
-  //         type: '(PRS)',
-  //         name: 'Computer Science',
-  //         groups: 'PZ'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     name: 'Tuesday',
-  //     date: new Date(), lessons: [
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(L)',
-  //         name: 'English',
-  //         groups: 'PZ'
-  //       },
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(Lab)',
-  //         name: 'Biology',
-  //         groups: 'BK'
-  //       },
-  //       {
-  //         order: 2,
-  //         time: '10:00-11:20',
-  //         type: '(L)',
-  //         name: 'Math',
-  //         groups: 'KN'
-  //       },
-  //       {
-  //         order: 3,
-  //         time: '11:50-13:10',
-  //         type: '(PRS)',
-  //         name: 'Computer Science',
-  //         groups: 'PZ'
-  //       }
-  //     ]
-  //   }
-  // ]
   days: Day[] = [];
 
   tabSettings: TabSettings;
@@ -93,8 +25,7 @@ export class SchedulePage implements OnInit {
   constructor(private modalController: ModalController,
               private route: ActivatedRoute,
               private scheduleService: ScheduleService,
-              private settingsService: SettingsService,
-              private toastService: ToastService) {
+              private settingsService: SettingsService) {
   }
 
   ngOnInit() {
@@ -103,21 +34,7 @@ export class SchedulePage implements OnInit {
 
     this.scheduleService.getSchedule(this.tabSettings.searchParams).subscribe((next) => {
       this.days = next;
-      console.log(next);
-    }, error => {
-      this.toastService.presentError(error.statusText)
     });
-
-    // this.days = (await this.scheduleService.getSchedule(this.tabSettings.searchParams).catch((err) => {
-    //   console.log(err)
-    // })).data
-
-    // this.scheduleService.getSchedule(this.tabSettings.searchParams).then((res) => {
-    //   this.toastService.presentSuccess(res.data)
-    // }).catch((err) => {
-    //   this.toastService.presentError(JSON.stringify(err))
-    //   console.log(err)
-    // })
   }
 
   async presentModal() {
@@ -128,16 +45,15 @@ export class SchedulePage implements OnInit {
       componentProps: {
         tabId: this.route.snapshot.paramMap.get('id')
       }
-
     });
 
     await modal.present();
 
-    // const {data} = await modal.onWillDismiss();
-    const a = await modal.onWillDismiss();
-    console.log('asdfasdfasd')
-    // console.log(data);
-    console.log(a.data)
+    modal.onDidDismiss().then((overlayEventDetail) => {
+      this.tabSettings = overlayEventDetail.data.tabSettings;
+      this.scheduleService.getSchedule(this.tabSettings.searchParams).subscribe((next) => {
+        this.days = next;
+      });
+    });
   }
-
 }
