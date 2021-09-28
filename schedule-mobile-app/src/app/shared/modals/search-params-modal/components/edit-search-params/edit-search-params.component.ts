@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SearchParams} from '../../../../models/search-params.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ToastController} from '@ionic/angular';
-import {debounceTime} from 'rxjs/operators';
 import {ScheduleService} from '../../../../../core/services/schedule.service';
+import {ToastService} from '../../../../../core/services/toast.service';
 
 @Component({
   selector: 'edit-search-params',
@@ -13,16 +12,16 @@ import {ScheduleService} from '../../../../../core/services/schedule.service';
 export class EditSearchParamsComponent implements OnInit {
 
   @Input() searchParams: SearchParams;
-  @Output() onSave = new EventEmitter<SearchParams>();
-  @Output() onRemove = new EventEmitter<SearchParams>();
+  @Output() save = new EventEmitter<SearchParams>();
+  @Output() remove = new EventEmitter<SearchParams>();
 
   searchParamsForm: FormGroup;
   groupsAutocomplete: string[] = [];
   teachersAutocomplete: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private toastController: ToastController,
-              private scheduleService: ScheduleService) {
+              private scheduleService: ScheduleService,
+              private toastService: ToastService) {
     this.searchParamsForm = this.formBuilder.group({
       group: ['', []],
       teacher: ['', []],
@@ -32,7 +31,7 @@ export class EditSearchParamsComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.searchParamsForm.patchValue({
       group: this.searchParams?.group,
       teacher: this.searchParams?.teacher,
@@ -41,10 +40,12 @@ export class EditSearchParamsComponent implements OnInit {
       isForMonth: this.searchParams?.isForMonth
     });
 
+    // this.groupsAutocomplete = (await this.scheduleService.getGroupAutocomplete('')).data
     this.scheduleService.getGroupAutocomplete('').subscribe((groups) => {
       this.groupsAutocomplete = groups;
     });
 
+    // this.teachersAutocomplete = (await this.scheduleService.getTeacherAutocomplete('')).data
     this.scheduleService.getTeacherAutocomplete('').subscribe((teachers) => {
       this.teachersAutocomplete = teachers;
     });
@@ -55,22 +56,22 @@ export class EditSearchParamsComponent implements OnInit {
   saveSearchParams(): void {
     if (this.searchParamsForm.invalid) {
       this.searchParamsForm.markAllAsTouched();
-      this.presentToastError('Введіть корректні дані');
+      this.toastService.presentError('Введіть корректні дані');
       return;
     }
 
     if (!this.searchParamsForm.get('group').value && !this.searchParamsForm.get('teacher').value) {
-      this.presentToastError('Введіть назву групи або прізвище викладача')
+      this.toastService.presentError('Введіть назву групи або прізвище викладача');
       return;
     }
 
     this.searchParams = {...this.searchParams, ...this.searchParamsForm.value}
-    this.onSave.emit(this.searchParams);
+    this.save.emit(this.searchParams);
   }
 
   removeSearchParams(): void {
     this.searchParams = {...this.searchParams, ...this.searchParamsForm.value}
-    this.onRemove.emit(this.searchParams);
+    this.remove.emit(this.searchParams);
   }
 
   toggleDateFields(isEnabled: boolean): void {
@@ -81,22 +82,6 @@ export class EditSearchParamsComponent implements OnInit {
       this.searchParamsForm.get('from').enable();
       this.searchParamsForm.get('to').enable();
     }
-  }
-
-  async presentToastError(message: string): Promise<void> {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 3000,
-      color: 'danger',
-      buttons: [
-        {
-          text: 'OK',
-          role: 'cancel',
-        }
-      ]
-    });
-
-    await toast.present();
   }
 
   keyword = 'name';

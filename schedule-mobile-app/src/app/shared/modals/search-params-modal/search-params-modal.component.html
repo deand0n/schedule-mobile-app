@@ -18,8 +18,8 @@
   <ion-list lines="full">
     <edit-search-params *ngFor="let params of tabSettings.searchParams"
                         [searchParams]="params"
-                        (onSave)="saveSearchParams($event)"
-                        (onRemove)="removeSearchParams($event)">
+                        (save)="saveSearchParams($event)"
+                        (remove)="removeSearchParams($event)">
     </edit-search-params>
   </ion-list>
 </ion-content>

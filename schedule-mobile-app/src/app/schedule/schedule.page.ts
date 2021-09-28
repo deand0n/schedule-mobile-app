@@ -6,6 +6,7 @@ import {TabSettings} from '../shared/models/tab-settings';
 import {ActivatedRoute} from '@angular/router';
 import {SettingsService} from '../core/services/settings.service';
 import {ScheduleService} from '../core/services/schedule.service';
+import {ToastService} from '../core/services/toast.service';
 
 @Component({
   selector: 'app-schedule',
@@ -92,7 +93,8 @@ export class SchedulePage implements OnInit {
   constructor(private modalController: ModalController,
               private route: ActivatedRoute,
               private scheduleService: ScheduleService,
-              private settingsService: SettingsService,) {
+              private settingsService: SettingsService,
+              private toastService: ToastService) {
   }
 
   ngOnInit() {
@@ -102,7 +104,20 @@ export class SchedulePage implements OnInit {
     this.scheduleService.getSchedule(this.tabSettings.searchParams).subscribe((next) => {
       this.days = next;
       console.log(next);
+    }, error => {
+      this.toastService.presentError(error.statusText)
     });
+
+    // this.days = (await this.scheduleService.getSchedule(this.tabSettings.searchParams).catch((err) => {
+    //   console.log(err)
+    // })).data
+
+    // this.scheduleService.getSchedule(this.tabSettings.searchParams).then((res) => {
+    //   this.toastService.presentSuccess(res.data)
+    // }).catch((err) => {
+    //   this.toastService.presentError(JSON.stringify(err))
+    //   console.log(err)
+    // })
   }
 
   async presentModal() {
