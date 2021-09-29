@@ -4,6 +4,14 @@
 }
 
 .card__item {
-  padding-bottom: 20px;
-  margin-top: 10px
+  padding-top: 3px;
+  padding-bottom: 8px;
+}
+
+ion-card * {
+  font-size: 1em;
+}
+
+ion-card ion-card-content ion-text * {
+  font-size: 1em;
 }
