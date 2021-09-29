@@ -28,7 +28,7 @@ export class EditSearchParamsComponent implements OnInit {
       from: ['', [Validators.required]],
       to: ['', [Validators.required]],
       isForMonth: ['', [Validators.required]]
-    })
+    });
   }
 
   async ngOnInit() {
@@ -40,15 +40,8 @@ export class EditSearchParamsComponent implements OnInit {
       isForMonth: this.searchParams?.isForMonth
     });
 
-    // this.groupsAutocomplete = (await this.scheduleService.getGroupAutocomplete('')).data
-    this.scheduleService.getGroupAutocomplete('').subscribe((groups) => {
-      this.groupsAutocomplete = groups;
-    });
-
-    // this.teachersAutocomplete = (await this.scheduleService.getTeacherAutocomplete('')).data
-    this.scheduleService.getTeacherAutocomplete('').subscribe((teachers) => {
-      this.teachersAutocomplete = teachers;
-    });
+    this.groupsAutocomplete = this.scheduleService.groups;
+    this.teachersAutocomplete = this.scheduleService.teachers;
 
     this.toggleDateFields(this.searchParams.isForMonth);
   }
@@ -83,56 +76,4 @@ export class EditSearchParamsComponent implements OnInit {
       this.searchParamsForm.get('to').enable();
     }
   }
-
-  keyword = 'name';
-  public countries = [
-    {
-      id: 1,
-      name: 'Albania',
-    },
-    {
-      id: 2,
-      name: 'Belgium',
-    },
-    {
-      id: 3,
-      name: 'Denmark',
-    },
-    {
-      id: 4,
-      name: 'Montenegro',
-    },
-    {
-      id: 5,
-      name: 'Turkey',
-    },
-    {
-      id: 6,
-      name: 'Ukraine',
-    },
-    {
-      id: 7,
-      name: 'Macedonia',
-    },
-    {
-      id: 8,
-      name: 'Slovenia',
-    },
-    {
-      id: 9,
-      name: 'Georgia',
-    },
-    {
-      id: 10,
-      name: 'India',
-    },
-    {
-      id: 11,
-      name: 'Russia',
-    },
-    {
-      id: 12,
-      name: 'Switzerland',
-    }
-  ];
 }

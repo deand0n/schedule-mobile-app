@@ -10,7 +10,20 @@ import {environment} from '../../../environments/environment';
 })
 export class ScheduleService {
 
+  teachers: string[] = [];
+  groups: string[] = [];
+
   constructor(private httpClient: HttpClient) {
+  }
+
+  init() {
+    this.getTeacherAutocomplete('').subscribe((teachers) => {
+      this.teachers = teachers;
+    });
+
+    this.getGroupAutocomplete('').subscribe((groups) => {
+      this.groups = groups;
+    });
   }
 
   getSchedule(searchParams: SearchParams[]): Observable<Day[]> {
