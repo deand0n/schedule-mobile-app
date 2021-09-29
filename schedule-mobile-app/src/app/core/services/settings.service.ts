@@ -48,7 +48,7 @@ export class SettingsService {
     this.storage.set('settings', settings).then((settings) => {
       this.settings = settings;
     }).catch((error) => {
-      this.toastService.presentError(`Error while saving settings, error: ${error}`);
+      this.toastService.presentError(`Помилка під час збереження налаштувань, error: ${error}`);
       this.logService.error(`Error while saving settings, error: ${error}`);
     });
   }
@@ -76,6 +76,11 @@ export class SettingsService {
 
 
   resetToDefault(): void {
-    this.settings = cloneDeep(defaultSettings);
+    this.storage.set('settings', defaultSettings).then((settings) => {
+      this.settings = cloneDeep(settings);
+    }).catch((error) => {
+      this.toastService.presentError(`Помилка під час відновляння налаштувань`);
+      this.logService.error(`Error while resetting settings, error: ${error}`);
+    });
   }
 }

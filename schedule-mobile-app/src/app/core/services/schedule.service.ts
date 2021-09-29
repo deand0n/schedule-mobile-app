@@ -12,6 +12,7 @@ export class ScheduleService {
 
   teachers: string[] = [];
   groups: string[] = [];
+  tabSchedule = [[] as Day[], [] as Day[], [] as Day[]];
 
   constructor(private httpClient: HttpClient) {
   }

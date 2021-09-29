@@ -1,21 +1,21 @@
-<ion-menu side="start" contentId="main">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Start Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!--<ion-menu side="start" contentId="main">-->
+<!--  <ion-header>-->
+<!--    <ion-toolbar color="primary">-->
+<!--      <ion-title>Start Menu</ion-title>-->
+<!--    </ion-toolbar>-->
+<!--  </ion-header>-->
 
 
-  <ion-content>
-    <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+<!--  <ion-content>-->
+<!--    <ion-list>-->
+<!--      <ion-item>Menu Item</ion-item>-->
+<!--      <ion-item>Menu Item</ion-item>-->
+<!--      <ion-item>Menu Item</ion-item>-->
+<!--      <ion-item>Menu Item</ion-item>-->
+<!--      <ion-item>Menu Item</ion-item>-->
+<!--    </ion-list>-->
+<!--  </ion-content>-->
+<!--</ion-menu>-->
 
 <ion-header>
   <ion-toolbar color="primary">
@@ -34,7 +34,7 @@
 </ion-header>
 
 <ion-content id="main">
-  <ion-refresher slot="fixed">
+  <ion-refresher slot="fixed" (ionRefresh)="getSchedule($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 

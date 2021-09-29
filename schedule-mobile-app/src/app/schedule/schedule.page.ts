@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Day} from './models/day.model';
-import {LoadingController, ModalController} from '@ionic/angular';
+import {IonRefresher, LoadingController, ModalController} from '@ionic/angular';
 import {SearchParamsModalComponent} from '../shared/modals/search-params-modal/search-params-modal.component';
 import {TabSettings} from '../shared/models/tab-settings';
 import {ActivatedRoute} from '@angular/router';
@@ -9,6 +9,7 @@ import {ScheduleService} from '../core/services/schedule.service';
 import {clone, cloneDeep, isEqual} from 'lodash-es';
 import {DateTime} from 'luxon';
 import {SearchParams} from '../shared/models/search-params.model';
+import {ToastService} from '../core/services/toast.service';
 
 @Component({
   selector: 'app-schedule',
@@ -27,14 +28,18 @@ export class SchedulePage implements OnInit {
               private route: ActivatedRoute,
               private scheduleService: ScheduleService,
               private settingsService: SettingsService,
-              private loadingController: LoadingController) {
+              private loadingController: LoadingController,
+              private toastService: ToastService) {
   }
 
   async ngOnInit() {
     this.tabId = +this.route.snapshot.paramMap.get('id');
     this.tabSettings = this.settingsService.getTabSettings(this.tabId);
+    this.days = this.scheduleService.tabSchedule[this.tabId];
 
-    await this.getSchedule();
+    if (this.days.length === 0 && this.tabSettings.searchParams.length !== 0) {
+      await this.getSchedule();
+    }
   }
 
   async presentModal() {
@@ -65,19 +70,24 @@ export class SchedulePage implements OnInit {
     });
   }
 
-  private async getSchedule() {
-    const loading = await this.loadingController.create({
-      message: 'Загрузка...',
-    });
-    await loading.present();
+  async getSchedule(event?) {
+    const loading = event === undefined ? await this.loadingController.create({
+        message: 'Загрузка...',
+      })
+      : undefined;
+    await loading?.present();
 
 
     this.scheduleService.getSchedule(this.tabSettings.searchParams).subscribe((days) => {
       this.days = days;
 
       this.days = this.sortDays(this.days);
+      this.scheduleService.tabSchedule[this.tabId] = this.days;
 
-      loading.dismiss();
+      loading?.dismiss();
+      event?.target.complete();
+    }, error => {
+      this.toastService.presentError('Не вдалося загрузити розклад');
     });
   }
 

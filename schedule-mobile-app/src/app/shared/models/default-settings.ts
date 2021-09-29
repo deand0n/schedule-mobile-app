@@ -5,7 +5,7 @@ export const defaultSettings: Settings = {
     {
       id: 0,
       name: 'first',
-      icon: 'triangle',
+      icon: 'square',
       searchParams: []
     },
     {
@@ -17,7 +17,7 @@ export const defaultSettings: Settings = {
     {
       id: 2,
       name: 'third',
-      icon: 'triangle',
+      icon: 'ellipse',
       searchParams: []
     }
   ]
