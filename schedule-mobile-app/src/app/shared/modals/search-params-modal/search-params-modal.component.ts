@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
-import {SettingsService} from '../../../core/services/settings.service';
-import {TabSettings} from '../../models/tab-settings';
 import {SearchParams} from '../../models/search-params.model';
 
 @Component({
@@ -12,38 +10,40 @@ import {SearchParams} from '../../models/search-params.model';
 export class SearchParamsModalComponent implements OnInit {
 
   @Input() tabId: number;
-  tabSettings: TabSettings;
+  @Input() searchParams: SearchParams[];
 
-  constructor(private modalController: ModalController,
-              private settingsService: SettingsService) {
+  constructor(private modalController: ModalController) {
   }
 
   ngOnInit(): void {
-    this.tabSettings = this.settingsService.getTabSettings(this.tabId);
   }
 
   async closeModal(): Promise<void> {
+    this.searchParams = this.searchParams.filter((params) => {
+      if (!params.isForMonth && params.startDate?.getTime() > params.endDate?.getTime()) {
+        return false;
+      }
+
+      return params.group || params.teacher;
+    });
+
     await this.modalController.dismiss({
-      tabSettings: this.tabSettings,
+      searchParams: this.searchParams,
     });
   }
 
   addSearchParams(): void {
-    const lastElementId = this.tabSettings.searchParams[this.tabSettings.searchParams.length - 1]?.id || 0;
-    this.tabSettings.searchParams.push(new SearchParams(lastElementId + 1));
+    const lastElementId = this.searchParams[this.searchParams.length - 1]?.id || 0;
+    this.searchParams.push(new SearchParams(lastElementId + 1));
   }
 
   saveSearchParams(searchParams: SearchParams): void {
-    const params = this.tabSettings.searchParams.find((params) => params.id === searchParams.id)
+    const params = this.searchParams.find((params) => params.id === searchParams.id);
     Object.assign(params, searchParams);
-
-    this.settingsService.setTabSettings(this.tabId, this.tabSettings);
   }
 
   removeSearchParams(searchParams: SearchParams): void {
-    const params = this.tabSettings.searchParams.find((params) => params.id === searchParams.id)
-    this.tabSettings.searchParams.splice(this.tabSettings.searchParams.indexOf(params), 1);
-
-    this.settingsService.setTabSettings(this.tabId, this.tabSettings);
+    const params = this.searchParams.find((params) => params.id === searchParams.id);
+    this.searchParams.splice(this.searchParams.indexOf(params), 1);
   }
 }

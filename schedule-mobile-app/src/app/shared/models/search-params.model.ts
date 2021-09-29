@@ -1,6 +1,6 @@
 export class SearchParams {
   id: number;
-  faculty: number;
+  faculty?: number;
   group?: string;
   teacher?: string;
   startDate?: Date;

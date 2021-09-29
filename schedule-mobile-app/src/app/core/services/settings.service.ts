@@ -5,6 +5,8 @@ import {defaultSettings} from '../../shared/models/default-settings';
 import {LogService} from './log.service';
 import {TabSettings} from '../../shared/models/tab-settings';
 import {ToastService} from './toast.service';
+import {cloneDeep} from 'lodash-es';
+import {SearchParams} from '../../shared/models/search-params.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +25,11 @@ export class SettingsService {
     await this.storage.create();
 
     this.storage.get('settings').then((settings) => {
-      this.settings = JSON.parse(JSON.stringify(settings));
+      this.settings = settings;
 
       this.settings.tabSettings = this.settings.tabSettings.map((tab, index) => {
         return tab.id === undefined ? {...defaultSettings.tabSettings[index]} : tab;
-      })
+      });
 
       if (!settings) {
         this.resetToDefault();
@@ -46,7 +48,7 @@ export class SettingsService {
     this.storage.set('settings', settings).then((settings) => {
       this.settings = settings;
     }).catch((error) => {
-      this.toastService.presentError(`Error while saving settings, error: ${error}`)
+      this.toastService.presentError(`Error while saving settings, error: ${error}`);
       this.logService.error(`Error while saving settings, error: ${error}`);
     });
   }
@@ -62,7 +64,18 @@ export class SettingsService {
     this.setSettings(this.settings);
   }
 
+  getSearchParams(tabId: number): SearchParams[] {
+    return this.settings.tabSettings[tabId].searchParams;
+  }
+
+  setSearchParams(tabId: number, searchParams: SearchParams[]): void {
+    this.settings.tabSettings[tabId].searchParams = searchParams;
+
+    this.setTabSettings(tabId, this.settings.tabSettings[tabId]);
+  }
+
+
   resetToDefault(): void {
-    this.settings = JSON.parse(JSON.stringify(defaultSettings));
+    this.settings = cloneDeep(defaultSettings);
   }
 }

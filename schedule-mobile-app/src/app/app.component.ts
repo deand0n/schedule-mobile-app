@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SettingsService} from './core/services/settings.service';
+import {ScheduleService} from './core/services/schedule.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,9 @@ import {SettingsService} from './core/services/settings.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private settingsService: SettingsService) {
+  constructor(private settingsService: SettingsService,
+              private scheduleService: ScheduleService) {
     this.settingsService.init();
+    this.scheduleService.init();
   }
 }
