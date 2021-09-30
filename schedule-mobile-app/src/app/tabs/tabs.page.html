@@ -1,10 +1,25 @@
-<ion-tabs>
+<ion-menu side="start" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>ЧДТУ розклад</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
+  <ion-content>
+    <ion-list lines="full">
+      <ion-item button [routerLink]="['/settings']">
+        <ion-icon name="settings"></ion-icon>
+        <ion-label style="margin-left: 10px">Налаштування</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-tabs>
   <ion-tab-bar slot="bottom" *ngIf="settings.tabSettings.length">
-    <ion-tab-button *ngFor="let tab of settings.tabSettings" tab="schedule/{{tab.id}}">
+    <ion-tab-button *ngFor="let tab of settings.tabSettings" tab="{{tab.id}}">
       <ion-icon name="{{tab.icon}}"></ion-icon>
-      <!--      <ion-label>{{tab.name}}</ion-label>-->
+      <ion-label>{{tab.name}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
