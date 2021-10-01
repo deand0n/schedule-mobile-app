@@ -18,7 +18,7 @@
     <ion-item button
               detail
               *ngFor="let tabSettings of settings.tabSettings"
-              (click)="goToTabSettings(tabSettings.id)"
+              (click)="presentModal(tabSettings)"
     >
       <ion-icon name="{{tabSettings.icon}}"></ion-icon>
       <ion-label>{{tabSettings.name}}</ion-label>

@@ -1,0 +1,16 @@
+<ion-content>
+  <form class="tab-settings-form">
+    <h2>Редагувати вкладку</h2>
+
+    <ion-item lines="none" class="tab-settings-form__name">
+      <ion-label class="tab-settings-form__name-label" position="stacked">Назва:</ion-label>
+      <ion-input class="tab-settings-form__name-input" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <app-icon-picker
+              [iconNames]="iconNames">
+      </app-icon-picker>
+    </ion-item>
+  </form>
+</ion-content>

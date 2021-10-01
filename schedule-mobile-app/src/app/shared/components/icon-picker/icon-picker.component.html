@@ -1,0 +1,27 @@
+<ion-grid>
+  <ion-row>
+    <ng-container *ngFor="let icon of iconsByPages[currentPage]; let i = index">
+      <ion-col *ngIf="i < iconsPerPage / 2">
+        <ion-item lines="none">
+          <ion-icon [name]="icon"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ng-container>
+  </ion-row>
+
+  <ion-row>
+    <ng-container *ngFor="let icon of iconsByPages[currentPage]; let i = index">
+      <ion-col *ngIf="i >= iconsPerPage / 2">
+        <ion-item lines="none">
+          <ion-icon [name]="icon"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ng-container>
+  </ion-row>
+
+  <ion-row>
+    <ion-col *ngFor="let pageIndex of counter(pagesAmount); let i = index">
+      <ion-icon name="ellipse" [style.color]="pageIndex === currentPage ? 'var(--ion-color-primary)' : ''"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>

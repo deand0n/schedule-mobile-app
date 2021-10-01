@@ -1,0 +1,31 @@
+.tab-settings-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  &__name {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  &__name-input {
+    width: 80%;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 10px;
+    text-indent: 30px;
+  }
+
+  &__name-input:focus-within {
+    border: 1px solid var(--ion-color-primary);
+  }
+
+  &__name-label {
+    margin-left: 10%;
+    margin-bottom: 10px;
+  }
+}
+

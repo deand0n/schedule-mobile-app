@@ -7,10 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsPage
-  },
-  {
-    path: 'tab-settings/:id',
-    loadChildren: () => import('./tab-settings/tab-settings.module').then(m => m.TabSettingsPageModule)
   }
 ];
 
