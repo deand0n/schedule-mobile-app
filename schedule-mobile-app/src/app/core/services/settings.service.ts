@@ -5,7 +5,7 @@ import {defaultSettings} from '../../shared/models/default-settings';
 import {LogService} from './log.service';
 import {TabSettings} from '../../shared/models/tab-settings';
 import {ToastService} from './toast.service';
-import {cloneDeep} from 'lodash-es';
+import {clone, cloneDeep} from 'lodash-es';
 import {SearchParams} from '../../shared/models/search-params.model';
 
 @Injectable({
@@ -24,16 +24,16 @@ export class SettingsService {
   async init(): Promise<void> {
     await this.storage.create();
 
-    this.storage.get('settings').then((settings) => {
+    this.storage.get('settings').then(async (settings) => {
       this.settings = settings;
+
+      if (!settings) {
+        await this.resetToDefault();
+      }
 
       this.settings.tabSettings = this.settings.tabSettings.map((tab, index) => {
         return tab.id === undefined ? {...defaultSettings.tabSettings[index]} : tab;
       });
-
-      if (!settings) {
-        this.resetToDefault();
-      }
     }).catch((error) => {
       this.toastService.presentError(`Error while reading settings from file system, error: ${error}`);
       this.logService.error(`Error while reading settings from file system, error: ${error}`);
@@ -54,7 +54,6 @@ export class SettingsService {
   }
 
   getTabSettings(tabId: number): TabSettings {
-    this.settings.tabSettings[tabId] = this.settings.tabSettings[tabId] || {...defaultSettings.tabSettings[tabId]};
     return this.settings.tabSettings[tabId];
   }
 
@@ -75,12 +74,12 @@ export class SettingsService {
   }
 
 
-  resetToDefault(): void {
-    this.storage.set('settings', defaultSettings).then((settings) => {
-      this.settings = cloneDeep(settings);
-    }).catch((error) => {
-      this.toastService.presentError(`Помилка під час відновляння налаштувань`);
+  async resetToDefault(): Promise<void> {
+    try {
+      this.settings = cloneDeep(await this.storage.set('settings', defaultSettings));
+    } catch (error) {
+      this.toastService.presentError(`Помилка під час відновлення налаштувань`);
       this.logService.error(`Error while resetting settings, error: ${error}`);
-    });
+    }
   }
 }
