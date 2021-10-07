@@ -3,8 +3,8 @@ export class SearchParams {
   faculty?: number;
   group?: string;
   teacher?: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   isForMonth: boolean;
 
   constructor(id: number) {

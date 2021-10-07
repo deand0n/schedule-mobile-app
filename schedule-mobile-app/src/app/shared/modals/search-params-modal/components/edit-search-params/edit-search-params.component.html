@@ -3,11 +3,7 @@
     <ion-card-title>
       <ion-text>Параметр пошуку №{{searchParams.id}}</ion-text>
 
-      <ion-button class="ion-float-right"
-                  size="small"
-                  shape="round"
-                  color="danger"
-                  (click)="removeSearchParams()">
+      <ion-button class="ion-float-right" size="small" shape="round" color="danger" (click)="removeSearchParams()">
         <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-card-title>
@@ -41,18 +37,17 @@
 
       <ion-item>
         <ion-label position="stacked">З дати:</ion-label>
-        <ion-input type="date" formControlName="from"></ion-input>
+        <ion-input type="date" formControlName="startDate"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">По дату:</ion-label>
-        <ion-input type="date" formControlName="to"></ion-input>
+        <ion-input type="date" formControlName="endDate"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>Автоматичний пошук на місяць</ion-label>
-        <ion-toggle formControlName="isForMonth"
-                    (click)="toggleDateFields(!searchParamsForm.get('isForMonth').value)">
+        <ion-toggle formControlName="isForMonth" (click)="toggleDateFields(!searchParamsForm.get('isForMonth').value)">
         </ion-toggle>
       </ion-item>
 

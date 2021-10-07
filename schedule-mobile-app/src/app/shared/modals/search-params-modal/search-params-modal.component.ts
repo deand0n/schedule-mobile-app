@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
-import {SearchParams} from '../../models/search-params.model';
+import { DateTime } from 'luxon';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { SearchParams } from '../../models/search-params.model';
 
 @Component({
   selector: 'search-params-modal',
@@ -20,11 +21,14 @@ export class SearchParamsModalComponent implements OnInit {
 
   async closeModal(): Promise<void> {
     this.searchParams = this.searchParams.filter((params) => {
-      if (!params.isForMonth && params.startDate?.getTime() > params.endDate?.getTime()) {
-        return false;
+      const startDate = DateTime.fromMillis(Date.parse(params.startDate));
+      const endDate = DateTime.fromMillis(Date.parse(params.endDate));
+
+      if (params.isForMonth || startDate < endDate) {
+        return params.group || params.teacher;
       }
 
-      return params.group || params.teacher;
+      return false;
     });
 
     await this.modalController.dismiss({

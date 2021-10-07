@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SearchParams} from '../../../../models/search-params.model';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ScheduleService} from '../../../../../core/services/schedule.service';
-import {ToastService} from '../../../../../core/services/toast.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SearchParams } from '../../../../models/search-params.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ScheduleService } from '../../../../../core/services/schedule.service';
+import { ToastService } from '../../../../../core/services/toast.service';
 
 @Component({
   selector: 'edit-search-params',
@@ -20,14 +20,14 @@ export class EditSearchParamsComponent implements OnInit {
   teachersAutocomplete: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private scheduleService: ScheduleService,
-              private toastService: ToastService) {
+    private scheduleService: ScheduleService,
+    private toastService: ToastService) {
     this.searchParamsForm = this.formBuilder.group({
       group: ['', []],
       teacher: ['', []],
-      from: ['', [Validators.required]],
-      to: ['', [Validators.required]],
-      isForMonth: ['', [Validators.required]]
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+      isForMonth: [false, []]
     });
   }
 
@@ -35,8 +35,8 @@ export class EditSearchParamsComponent implements OnInit {
     this.searchParamsForm.patchValue({
       group: this.searchParams?.group,
       teacher: this.searchParams?.teacher,
-      from: this.searchParams?.startDate,
-      to: this.searchParams?.endDate,
+      startDate: this.searchParams?.startDate,
+      endDate: this.searchParams?.endDate,
       isForMonth: this.searchParams?.isForMonth
     });
 
@@ -58,22 +58,22 @@ export class EditSearchParamsComponent implements OnInit {
       return;
     }
 
-    this.searchParams = {...this.searchParams, ...this.searchParamsForm.value}
+    this.searchParams = { ...this.searchParams, ...this.searchParamsForm.value }
     this.save.emit(this.searchParams);
   }
 
   removeSearchParams(): void {
-    this.searchParams = {...this.searchParams, ...this.searchParamsForm.value}
+    this.searchParams = { ...this.searchParams, ...this.searchParamsForm.value }
     this.remove.emit(this.searchParams);
   }
 
   toggleDateFields(isEnabled: boolean): void {
     if (isEnabled) {
-      this.searchParamsForm.get('from').disable();
-      this.searchParamsForm.get('to').disable();
+      this.searchParamsForm.get('startDate').disable();
+      this.searchParamsForm.get('endDate').disable();
     } else {
-      this.searchParamsForm.get('from').enable();
-      this.searchParamsForm.get('to').enable();
+      this.searchParamsForm.get('startDate').enable();
+      this.searchParamsForm.get('endDate').enable();
     }
   }
 }
