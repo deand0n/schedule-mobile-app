@@ -22,4 +22,12 @@
                         (remove)="removeSearchParams($event)">
     </edit-search-params>
   </ion-list>
+
+  <ion-card color="warning" *ngIf="searchParams.length === 0">
+    <ion-card-header>
+      <ion-text style="font-weight: bold">
+        Натисніть на "+" щоб додати параметри пошуку
+      </ion-text>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
