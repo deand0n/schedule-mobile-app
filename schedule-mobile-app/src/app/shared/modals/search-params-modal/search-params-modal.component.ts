@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SearchParams } from '../../models/search-params.model';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
   selector: 'search-params-modal',
@@ -13,7 +14,10 @@ export class SearchParamsModalComponent implements OnInit {
   @Input() tabId: number;
   @Input() searchParams: SearchParams[];
 
-  constructor(private modalController: ModalController) {
+  private searchParamsLimit = 5;
+
+  constructor(private modalController: ModalController,
+    private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -37,6 +41,11 @@ export class SearchParamsModalComponent implements OnInit {
   }
 
   addSearchParams(): void {
+    if (this.searchParams.length >= this.searchParamsLimit) {
+      this.toastService.presentError(`Параметрів не може бути більше ${this.searchParamsLimit}`)
+      return;
+    }
+
     const lastElementId = this.searchParams[this.searchParams.length - 1]?.id || 0;
     this.searchParams.push(new SearchParams(lastElementId + 1));
   }

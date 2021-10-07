@@ -59,6 +59,7 @@ export class EditSearchParamsComponent implements OnInit {
     }
 
     this.searchParams = { ...this.searchParams, ...this.searchParamsForm.value }
+    this.toastService.presentSuccess('Параметри були успішно збережені');
     this.save.emit(this.searchParams);
   }
 
