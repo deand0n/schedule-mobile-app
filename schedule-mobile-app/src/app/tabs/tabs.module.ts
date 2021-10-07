@@ -1,10 +1,11 @@
+import { SchedulePageModule } from './../schedule/schedule.module';
 import { NgModule } from '@angular/core';
 
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
-import {SharedModule} from '../shared/shared.module';
-import {RouterModule} from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -14,4 +15,4 @@ import {RouterModule} from '@angular/router';
   ],
   declarations: [TabsPage]
 })
-export class TabsPageModule {}
+export class TabsPageModule { }
