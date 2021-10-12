@@ -1,21 +1,20 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor, HttpErrorResponse
-} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {ToastService} from './toast.service';
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { ToastService } from "./toast.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
-  constructor(private toastService: ToastService) {
+  constructor (private toastService: ToastService) {
   }
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept (request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {

@@ -1,4 +1,4 @@
-import {SearchParams} from './search-params.model';
+import { SearchParams } from "./search-params.model";
 
 export interface TabSettings {
   id: number;

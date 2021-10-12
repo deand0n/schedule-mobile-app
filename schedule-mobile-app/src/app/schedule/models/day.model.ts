@@ -1,4 +1,4 @@
-import {Lesson} from './lesson.model';
+import { Lesson } from "./lesson.model";
 
 export interface Day {
   name: string;

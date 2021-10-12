@@ -1,33 +1,32 @@
-import {Injectable, isDevMode} from '@angular/core';
-import * as moment from 'moment';
+import { Injectable, isDevMode } from "@angular/core";
+import * as moment from "moment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LogService {
+  constructor () { }
 
-  constructor() { }
-
-  public log(message: string): void {
-    this.performLog(message, 'log');
+  public log (message: string): void {
+    this.performLog(message, "log");
   }
 
-  public warn(message: string): void {
-    this.performLog(message, 'warn');
+  public warn (message: string): void {
+    this.performLog(message, "warn");
   }
 
-  public error(message: string): void {
-    this.performLog(message, 'error');
+  public error (message: string): void {
+    this.performLog(message, "error");
   }
 
-  public info(message: string): void {
-    this.performLog(message, 'info');
+  public info (message: string): void {
+    this.performLog(message, "info");
   }
 
-  private prepareMessage(message: string, level: string): string {
+  private prepareMessage (message: string, level: string): string {
     const prefixes = [];
 
-    prefixes.push(moment().format('YYYY-MM-DD HH:mm:ss.SSS'));
+    prefixes.push(moment().format("YYYY-MM-DD HH:mm:ss.SSS"));
 
     if (level) {
       prefixes.push(level.toUpperCase());
@@ -36,11 +35,11 @@ export class LogService {
     if (path) {
       prefixes.push(path);
     }
-    const prefix = prefixes.map(e => `[${e}]`).join(' ');
+    const prefix = prefixes.map((e) => `[${e}]`).join(" ");
     return `${prefix} ${message}`;
   }
 
-  private performLog(message: string, level: string): void {
+  private performLog (message: string, level: string): void {
     const preparedMessage = this.prepareMessage(message, level);
     try {
       if (isDevMode()) {
