@@ -90,6 +90,7 @@ export class SchedulePage implements OnInit {
     }, (error) => {
       this.toastService.presentError("Не вдалося загрузити розклад");
       this.logService.error(error);
+      loading?.dismiss();
     });
   }
 

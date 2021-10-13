@@ -18,7 +18,12 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.toastService.presentError(error.message);
+          if (error.status === -3) {
+            this.toastService.presentError("Немає з'єднання з інтернетом");
+          } else {
+            this.toastService.presentError(error.message);
+          }
+
           return throwError(error);
         })
       );
