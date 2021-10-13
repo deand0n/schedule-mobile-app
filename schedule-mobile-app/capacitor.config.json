@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "schedule-mobile-app",
+  "appName": "ЧДТУ розклад",
   "webDir": "www",
   "bundledWebRuntime": false,
   "server": {

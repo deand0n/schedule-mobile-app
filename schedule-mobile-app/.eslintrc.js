@@ -28,6 +28,7 @@ module.exports = {
     "no-invalid-this": "error",
     "no-unneeded-ternary": "error",
     "no-useless-constructor": "off",
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "space-before-function-paren": ["error", "never"]
   }
 };

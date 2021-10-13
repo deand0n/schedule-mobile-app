@@ -11,10 +11,10 @@ import { ToastService } from "./toast.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor (private toastService: ToastService) {
+  constructor(private toastService: ToastService) {
   }
 
-  intercept (request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {

@@ -23,7 +23,7 @@ export class SchedulePage implements OnInit {
   tabSettings: TabSettings;
   tabId: number;
 
-  constructor (
+  constructor(
     private modalController: ModalController,
     private route: ActivatedRoute,
     private scheduleService: ScheduleService,
@@ -34,7 +34,7 @@ export class SchedulePage implements OnInit {
   ) {
   }
 
-  async ngOnInit () {
+  async ngOnInit() {
     this.tabId = +this.route.snapshot.paramMap.get("id");
     this.tabSettings = this.settingsService.getTabSettings(this.tabId);
     this.days = this.scheduleService.tabSchedule[this.tabId];
@@ -44,7 +44,7 @@ export class SchedulePage implements OnInit {
     }
   }
 
-  async presentModal () {
+  async presentModal() {
     const modal = await this.modalController.create({
       component: SearchParamsModalComponent,
       animated: true,
@@ -57,7 +57,7 @@ export class SchedulePage implements OnInit {
 
     await modal.present();
 
-    modal.onDidDismiss().then(async (overlayEventDetail) => {
+    modal.onDidDismiss().then(async(overlayEventDetail) => {
       const searchParams: SearchParams[] = overlayEventDetail.data.searchParams;
 
       if (isEqual(this.tabSettings.searchParams, searchParams)) {
@@ -71,7 +71,7 @@ export class SchedulePage implements OnInit {
     });
   }
 
-  async getSchedule (event?) {
+  async getSchedule(event?) {
     const loading = event === undefined
       ? await this.loadingController.create({
         message: "Загрузка..."
@@ -94,7 +94,7 @@ export class SchedulePage implements OnInit {
     });
   }
 
-  private sortDays (days: Day[]) {
+  private sortDays(days: Day[]) {
     days = days.sort((firstDay, secondDay) => {
       const firstDate = DateTime.fromFormat(firstDay.date, "dd.LL.yyyy");
       const secondDate = DateTime.fromFormat(secondDay.date, "dd.LL.yyyy");
